@@ -28,14 +28,10 @@ android {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -53,12 +49,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
 
     buildFeatures {
@@ -93,7 +89,12 @@ dependencies {
     implementation(libs.okhttp) // Cliente HTTP
     implementation(libs.okhttp.logging) // Interceptor para logs de red
     implementation(libs.hilt.android) // Core de Hilt
-    kapt(libs.hilt.compiler) // Procesador de anotaciones
+    implementation(libs.androidx.annotation) // Para soporte de anotaciones
+    //implementation(libs.javapoet)
+    kapt(libs.hilt.compiler)
+//    {
+//        exclude(group = "com.squareup", module = "javapoet")
+//    }
     implementation(libs.hilt.navigation.compose) // Integración con Jetpack Compose
 
     testImplementation(libs.junit)
