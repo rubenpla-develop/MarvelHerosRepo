@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rpla.marvelherosrepo"
-        minSdk = 26
+        minSdk = 31
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.paging.compose)
     implementation(libs.material.icons.core) // Conjunto básico de iconos
     implementation(libs.material.icons.extended) // Conjunto extendido de iconos
+    implementation(libs.androidx.splashscreen)
     implementation(libs.coroutines.core) // Corrutinas estándar
     implementation(libs.coroutines.android) // Soporte para Android
     implementation(libs.retrofit) // Core de Retrofit
