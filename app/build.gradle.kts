@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    id("org.jetbrains.kotlin.kapt") // Habilitar Kapt
 }
 
 android {
@@ -18,6 +20,28 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
+
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -27,13 +51,16 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
@@ -49,6 +76,26 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
+    implementation(libs.constraintlayout.compose)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.navigation.compose)
+    implementation(libs.paging.runtime) // Para usar con ViewModel y LiveData
+    implementation(libs.paging.compose)
+    implementation(libs.material.icons.core) // Conjunto básico de iconos
+    implementation(libs.material.icons.extended) // Conjunto extendido de iconos
+    implementation(libs.coroutines.core) // Corrutinas estándar
+    implementation(libs.coroutines.android) // Soporte para Android
+    implementation(libs.retrofit) // Core de Retrofit
+    implementation(libs.retrofit.converter.gson) // Conversor de JSON a objetos Kotlin
+    implementation(libs.okhttp) // Cliente HTTP
+    implementation(libs.okhttp.logging) // Interceptor para logs de red
+    implementation(libs.hilt.android) // Core de Hilt
+    kapt(libs.hilt.compiler) // Procesador de anotaciones
+    implementation(libs.hilt.navigation.compose) // Integración con Jetpack Compose
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
