@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,7 +20,21 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val localPropertiesFile = rootProject.file("local.properties")
+        val localProperties = Properties().apply {
+            load(FileInputStream(localPropertiesFile))
+        }
+
+        val apiKey = localProperties.getProperty("PUBLIC_KEY")
+        val pvtKey = localProperties.getProperty("PRIVATE_KEY")
+        buildConfigField("String", "PUBLIC_KEY", "\"$apiKey\"")
+        buildConfigField("String", "PRIVATE_KEY", "\"$pvtKey\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     kapt {
@@ -91,11 +108,9 @@ dependencies {
     implementation(libs.okhttp.logging) // Interceptor para logs de red
     implementation(libs.hilt.android) // Core de Hilt
     implementation(libs.androidx.annotation) // Para soporte de anotaciones
-    //implementation(libs.javapoet)
+    implementation(libs.security.crypto)
+    implementation(libs.security.crypto.ktx) // Soporte KTX (incluye MasterKey)
     kapt(libs.hilt.compiler)
-//    {
-//        exclude(group = "com.squareup", module = "javapoet")
-//    }
     implementation(libs.hilt.navigation.compose) // Integración con Jetpack Compose
 
     testImplementation(libs.junit)
