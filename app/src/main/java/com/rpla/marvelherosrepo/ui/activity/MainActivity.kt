@@ -1,4 +1,4 @@
-package com.rpla.marvelherosrepo
+package com.rpla.marvelherosrepo.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,9 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.rpla.marvelherosrepo.home.ui.HomeScreen
 import com.rpla.marvelherosrepo.home.ui.viewModel.CharactersListViewModel
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeIntent
+import com.rpla.marvelherosrepo.ui.navigation.Routes
 import com.rpla.marvelherosrepo.ui.theme.MarvelHerosRepoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +39,20 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen(viewModel)
+                    val navigationController = rememberNavController()
+
+                    NavHost(
+                        navController = navigationController,
+                        startDestination = Routes.HomeScreen.route
+                    ) {
+                        composable(Routes.HomeScreen.route) {
+                            HomeScreen(
+                                viewModel = viewModel,
+                                navigationController = navigationController
+                            )
+                        }
+                        //TODO missing composable for EmployeeProfileScreen()
+                    }
                 }
             }
         }
