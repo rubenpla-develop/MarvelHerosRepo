@@ -32,19 +32,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.rpla.marvelherosrepo.R
 import com.rpla.marvelherosrepo.home.domain.entity.CharacterResultsEntity
 import com.rpla.marvelherosrepo.home.ui.viewModel.CharactersListViewModel
-import com.rpla.marvelherosrepo.home.ui.viewModel.HomeIntent
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeState
 import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
+import com.rpla.marvelherosrepo.ui.navigation.Routes
 
 @Composable
-fun HomeScreen(viewModel: CharactersListViewModel) {
+fun HomeScreen(
+    viewModel: CharactersListViewModel,
+    navigationController: NavHostController
+) {
     Scaffold(topBar = {
         HomeAppBar(title = stringResource(R.string.app_name),
             modifier = Modifier,
@@ -52,12 +56,20 @@ fun HomeScreen(viewModel: CharactersListViewModel) {
         )
     },
         content = { innerPadding ->
-            WorkersGridList(viewModel = viewModel, paddingValues = innerPadding)
+            WorkersGridList(
+                viewModel = viewModel,
+                paddingValues = innerPadding,
+                navigationController = navigationController
+            )
         })
 }
 
 @Composable
-fun WorkersGridList(viewModel: CharactersListViewModel, paddingValues: PaddingValues) {
+fun WorkersGridList(
+    viewModel: CharactersListViewModel,
+    paddingValues: PaddingValues,
+    navigationController: NavHostController
+) {
     val uiState = viewModel.state.collectAsState()
 
     when (uiState.value) {
@@ -76,7 +88,9 @@ fun WorkersGridList(viewModel: CharactersListViewModel, paddingValues: PaddingVa
             ) {
                 items(characterItems.itemCount) { itemIndex ->
                     characterItems[itemIndex]?.let { characterEntity ->
-                        CharacterItem(character = characterEntity)
+                        CharacterItem(character = characterEntity) { id ->
+                           // navigationController.navigate(Routes.CharacterProfile.createRoute(characterEntity.id.toString()))
+                        }
                     }
                 }
             }
@@ -87,7 +101,10 @@ fun WorkersGridList(viewModel: CharactersListViewModel, paddingValues: PaddingVa
 }
 
 @Composable
-fun CharacterItem(character: CharacterResultsEntity) {
+fun CharacterItem(
+    character: CharacterResultsEntity,
+    onCharacterClicked: (id: Int) -> Unit
+) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
         border = BorderStroke(2.dp, Color.DarkGray),
@@ -96,7 +113,10 @@ fun CharacterItem(character: CharacterResultsEntity) {
             .clip(RoundedCornerShape(10.dp))
             .height(200.dp)
             .fillMaxWidth()
-            .clickable { Log.i("characterItem", "Character with id ${character.id} clicked") }) {
+            .clickable {
+                Log.i("characterItem", "Character with id ${character.id} clicked")
+                onCharacterClicked(character.id)
+            }) {
         ConstraintLayout {
 
             val (name, gender, category, photo, spacerTop, spacerStart,
@@ -177,20 +197,6 @@ fun CharacterItem(character: CharacterResultsEntity) {
                         start.linkTo(spacerStart.end)
                     }
             )
-
-//            Text(
-//                text = character.profession,
-//                color = Color.White,
-//                fontSize = 10.sp,
-//                modifier = Modifier
-//                    .background(Color.DarkGray, RoundedCornerShape(4.dp))
-//                    .border(1.dp, Color.LightGray, RoundedCornerShape(4.dp))
-//                    .padding(top = 1.dp, start = 3.dp, bottom = 1.dp, end = 3.dp)
-//                    .constrainAs(category) {
-//                        end.linkTo(spacerEnd.start)
-//                        bottom.linkTo(spacerBottom.top)
-//                    }
-//            )
         }
     }
 }
