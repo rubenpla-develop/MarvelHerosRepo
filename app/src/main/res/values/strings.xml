@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Marvel Heros Repo</string>
+    <string name="app_name">Marvel Heroes Repo</string>
+    <string name="description_title">Description</string>
+    <string name="no_description_message">This character has no description available</string>
+    <string name="description_show_more">Show More</string>
+    <string name="description_show_less">Show Less</string>
+    <string name="published_comics_append_message">\u0020comics published</string>
 </resources>
