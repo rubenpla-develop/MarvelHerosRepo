@@ -30,6 +30,9 @@ class RetrofitInterceptor : Interceptor {
                 in HttpURLConnection.HTTP_CONFLICT..ApiConstants.STATUS_CODE_409_MISSING_QUERY_PARAM -> {
                     throw RemoteException.ClientError(response.message)
                 }
+                in HttpURLConnection.HTTP_INTERNAL_ERROR..ApiConstants.STATUS_CODE_500_INTERNAL_ERROR -> {
+                    throw RemoteException.GenericError(response.message)
+                }
                 else -> return response
             }
         } catch (e: Exception) {

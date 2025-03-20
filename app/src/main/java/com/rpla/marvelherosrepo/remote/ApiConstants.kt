@@ -7,6 +7,7 @@ object ApiConstants {
     const val TIMEOUT = 30L
     const val PAGE_SIZE = 20
 
+    const val STATUS_CODE_500_INTERNAL_ERROR = 500
     const val STATUS_CODE_409_MISSING_QUERY_PARAM = 409 // Missing API/Hash/Timestamp query param
     const val STATUS_CODE_401_INVALID_REFERRER_OR_HASH = 401 // Invalid Referrer
     // Invalid Hash: Occurs when a ts, hash, and apikey parameter are sent but the hash is not valid per the above hash generation rule..
