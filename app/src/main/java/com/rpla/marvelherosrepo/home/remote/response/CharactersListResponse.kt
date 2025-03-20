@@ -43,7 +43,7 @@ data class ComicSummary(
 fun CharacterShortInfo.toEntity() = CharacterResultsEntity(
     id = id,
     name = name,
-    thumbnail = thumbnail.path,
+    thumbnail = thumbnail.path.plus("/portrait_xlarge".plus(thumbnail.extension)),
     comicsListSize = comics.items.size
 )
 
