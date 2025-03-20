@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 object HomeScreenModule {
 
     @Provides
-    fun providesCharactersSource(employeeRepository: CharacterRepository) =
-        CharactersSource(employeeRepository)
+    fun providesCharactersSource(characterRepository: CharacterRepository) =
+        CharactersSource(characterRepository)
 }
