@@ -16,9 +16,13 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.rpla.marvelherosrepo.home.ui.HomeScreen
 import com.rpla.marvelherosrepo.home.ui.viewModel.CharactersListViewModel
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeIntent
+import com.rpla.marvelherosrepo.profile.ui.CharacterDetailScreen
+import com.rpla.marvelherosrepo.ui.navigation.CHARACTER_ID_PARAM_NAME
+import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.navigation.Routes
 import com.rpla.marvelherosrepo.ui.theme.MarvelHerosRepoTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +55,17 @@ class MainActivity : ComponentActivity() {
                                 navigationController = navigationController
                             )
                         }
-                        //TODO missing composable for EmployeeProfileScreen()
+                        composable(Routes.CharacterProfile.route,
+                            arguments =  listOf(navArgument(CHARACTER_ID_PARAM_NAME) {
+                                defaultValue = DEFAULT_CHARACTER_ID
+                            })) { NavBackStackEntry ->
+
+                            CharacterDetailScreen(
+                                characterId = NavBackStackEntry.arguments?.getInt(
+                                    CHARACTER_ID_PARAM_NAME)) {
+                                navigationController.navigate(Routes.HomeScreen.route)
+                            }
+                        }
                     }
                 }
             }

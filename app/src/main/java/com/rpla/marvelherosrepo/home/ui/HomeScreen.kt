@@ -40,8 +40,10 @@ import com.rpla.marvelherosrepo.R
 import com.rpla.marvelherosrepo.home.domain.entity.CharacterResultsEntity
 import com.rpla.marvelherosrepo.home.ui.viewModel.CharactersListViewModel
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeState
+import com.rpla.marvelherosrepo.ui.extensions.shimmerEffect
 import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
+import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.navigation.Routes
 
 @Composable
@@ -89,7 +91,7 @@ fun WorkersGridList(
                 items(characterItems.itemCount) { itemIndex ->
                     characterItems[itemIndex]?.let { characterEntity ->
                         CharacterItem(character = characterEntity) { id ->
-                           // navigationController.navigate(Routes.CharacterProfile.createRoute(characterEntity.id.toString()))
+                            navigationController.navigate(Routes.CharacterProfile.createRoute(id.toString()))
                         }
                     }
                 }
@@ -113,6 +115,7 @@ fun CharacterItem(
             .clip(RoundedCornerShape(10.dp))
             .height(200.dp)
             .fillMaxWidth()
+            .shimmerEffect(5000)
             .clickable {
                 Log.i("characterItem", "Character with id ${character.id} clicked")
                 onCharacterClicked(character.id)
@@ -185,7 +188,7 @@ fun CharacterItem(
                     }
             )
             Text(
-                text = character.comicsListSize.toString().plus(" ").plus("comics published"),
+                text = character.comicsListSize.toString().plus(R.string.published_comics_append_message),
                 color = Color.White,
                 fontSize = 10.sp,
                 modifier = Modifier
