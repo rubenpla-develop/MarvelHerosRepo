@@ -67,9 +67,9 @@ fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             onTextLayout = {
-                if (it.lineCount == 1 && it.isLineEllipsized(3)) {
+                if (it.lineCount == 4 && it.isLineEllipsized(3)) {
                     shouldShowMore.value = DescriptionStatus.SHOW_MORE
-                } else if (it.lineCount > 1) {
+                } else if (it.lineCount > 4) {
                     shouldShowMore.value = DescriptionStatus.SHOW_LESS
                 }
             }

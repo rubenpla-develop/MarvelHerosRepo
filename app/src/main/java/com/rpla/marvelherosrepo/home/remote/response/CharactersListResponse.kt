@@ -43,8 +43,16 @@ data class ComicSummary(
 fun CharacterShortInfo.toEntity() = CharacterResultsEntity(
     id = id,
     name = name,
-    thumbnail = thumbnail.path.plus("/portrait_xlarge".plus(thumbnail.extension)),
+    thumbnail = ensureHttpsUrl(thumbnail.path).plus("/portrait_fantastic.".plus(thumbnail.extension)),
     comicsListSize = comics.items.size
 )
 
 fun List<CharacterShortInfo>.toEntity() = map { it.toEntity() }
+
+private fun ensureHttpsUrl(url: String): String {
+    return if (url.startsWith("http://")) {
+        url.replaceFirst("http://", "https://")
+    } else {
+        url
+    }
+}

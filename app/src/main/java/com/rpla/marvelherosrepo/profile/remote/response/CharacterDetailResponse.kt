@@ -23,5 +23,15 @@ fun CharacterDetailResponse.toEntity() = CharacterDetailEntity(
     id = id,
     name = name,
     description = description,
-    thumbnail = thumbnail.path.plus("/landscape_xlarge.".plus(thumbnail.extension))
+    thumbnail = ensureHttpsUrl(thumbnail.path)
+        .plus("/standard_amazing.")
+        .plus(thumbnail.extension)
 )
+
+private fun ensureHttpsUrl(url: String): String {
+    return if (url.startsWith("http://")) {
+        url.replaceFirst("http://", "https://")
+    } else {
+        url
+    }
+}

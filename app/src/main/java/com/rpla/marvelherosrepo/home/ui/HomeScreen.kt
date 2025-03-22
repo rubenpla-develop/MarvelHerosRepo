@@ -188,7 +188,7 @@ fun CharacterItem(
                     }
             )
             Text(
-                text = character.comicsListSize.toString().plus(R.string.published_comics_append_message),
+                text = character.comicsListSize.toString().plus(LocalContext.current.getString(R.string.published_comics_append_message)),
                 color = Color.White,
                 fontSize = 10.sp,
                 modifier = Modifier
