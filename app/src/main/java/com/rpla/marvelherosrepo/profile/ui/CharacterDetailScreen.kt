@@ -29,7 +29,6 @@ import com.rpla.marvelherosrepo.profile.ui.compose.DescriptionBlock
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailIntent
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailState
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailViewModel
-import com.rpla.marvelherosrepo.ui.extensions.shimmerEffect
 import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.theme.PinkA400
 import com.rpla.marvelherosrepo.ui.theme.White

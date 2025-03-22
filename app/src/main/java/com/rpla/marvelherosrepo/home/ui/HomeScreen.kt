@@ -40,11 +40,9 @@ import com.rpla.marvelherosrepo.R
 import com.rpla.marvelherosrepo.home.domain.entity.CharacterResultsEntity
 import com.rpla.marvelherosrepo.home.ui.viewModel.CharactersListViewModel
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeState
-import com.rpla.marvelherosrepo.ui.extensions.shimmerEffect
-import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
-import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.navigation.Routes
+import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 
 @Composable
 fun HomeScreen(
@@ -115,7 +113,6 @@ fun CharacterItem(
             .clip(RoundedCornerShape(10.dp))
             .height(200.dp)
             .fillMaxWidth()
-            .shimmerEffect(5000)
             .clickable {
                 Log.i("characterItem", "Character with id ${character.id} clicked")
                 onCharacterClicked(character.id)
