@@ -22,6 +22,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,21 +33,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.rpla.marvelherosrepo.R
 import com.rpla.marvelherosrepo.home.domain.entity.CharacterResultsEntity
 import com.rpla.marvelherosrepo.home.ui.viewModel.CharactersListViewModel
+import com.rpla.marvelherosrepo.home.ui.viewModel.HomeIntent
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeState
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
+import com.rpla.marvelherosrepo.ui.common.LoadingItem
+import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.navigation.Routes
 import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 
 @Composable
 fun HomeScreen(
-    viewModel: CharactersListViewModel,
     navigationController: NavHostController
 ) {
     Scaffold(topBar = {
@@ -57,7 +62,6 @@ fun HomeScreen(
     },
         content = { innerPadding ->
             WorkersGridList(
-                viewModel = viewModel,
                 paddingValues = innerPadding,
                 navigationController = navigationController
             )
@@ -66,21 +70,27 @@ fun HomeScreen(
 
 @Composable
 fun WorkersGridList(
-    viewModel: CharactersListViewModel,
+    viewModel: CharactersListViewModel = hiltViewModel(),
     paddingValues: PaddingValues,
     navigationController: NavHostController
 ) {
+
+    LaunchedEffect(Unit) {
+        viewModel.dispatchIntent(HomeIntent.AllCharacters)
+    }
+
     val uiState = viewModel.state.collectAsState()
 
     when (uiState.value) {
-        is HomeState.InitialState -> { Log.d("HomeScreen", "INITIAL STATE") }
-        is HomeState.LoadingState -> { Log.d("HomeScreen", "LOADING STATE") }
+        is HomeState.InitialState -> { Log.d("HomeScreen", "InitialState") }
+        is HomeState.LoadingState -> { Log.d("HomeScreen", "LoadingState") }
         is HomeState.CharactersListData -> {
             val characterItems =
                 (uiState.value as HomeState.CharactersListData).characters.collectAsLazyPagingItems()
             LazyVerticalGrid(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight()
                     .padding(top = paddingValues.calculateTopPadding())
                     .background(color = PurpleGrey40),
                 columns = GridCells.Fixed(2),
@@ -91,6 +101,23 @@ fun WorkersGridList(
                         CharacterItem(character = characterEntity) { id ->
                             navigationController.navigate(Routes.CharacterProfile.createRoute(id.toString()))
                         }
+                    }
+                }
+
+                characterItems.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            item { LoadingItem() }
+                            item { LoadingItem() }
+                        }
+
+                        loadState.append is LoadState.Loading -> {
+                            item { LoadingItem() }
+                            item { LoadingItem() }
+                        }
+
+                        loadState.refresh is LoadState.Error -> {}
+                        loadState.append is LoadState.Error -> {}
                     }
                 }
             }
@@ -174,7 +201,6 @@ fun CharacterItem(
                 text = character.name,
                 color = Color.White,
                 fontSize = 10.sp,
-                //fontStyle = FontStyle.Italic,
                 modifier = Modifier
                     .background(Color.DarkGray, RoundedCornerShape(4.dp))
                     .border(1.dp, Color.LightGray, RoundedCornerShape(4.dp))
