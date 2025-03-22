@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Marvel Heroes Repo</string>
+    <string name="profile_screen_title">Character Profile</string>
     <string name="description_title">Description</string>
     <string name="no_description_message">This character has no description available</string>
     <string name="description_show_more">Show More</string>

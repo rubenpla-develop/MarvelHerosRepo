@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -13,30 +15,55 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.rpla.marvelherosrepo.R
 import com.rpla.marvelherosrepo.profile.domain.entity.CharacterDetailEntity
 import com.rpla.marvelherosrepo.profile.ui.compose.MainHeader
 import com.rpla.marvelherosrepo.profile.ui.compose.DescriptionBlock
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailIntent
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailState
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailViewModel
+import com.rpla.marvelherosrepo.ui.common.HomeAppBar
+import com.rpla.marvelherosrepo.ui.common.LoadingItem
 import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.theme.PinkA400
 import com.rpla.marvelherosrepo.ui.theme.White
 
 @Composable
+fun ProfileScreen(
+    characterId: Int? = DEFAULT_CHARACTER_ID,
+    onBackButtonPressed: () -> Unit
+) {
+    Scaffold(topBar = {
+        HomeAppBar(title = stringResource(R.string.profile_screen_title),
+            modifier = Modifier,
+            openFilters = {}
+        )
+    },
+        content = { innerPadding ->
+            CharacterDetailScreen(
+                characterId = characterId,
+                onBackButtonPressed = onBackButtonPressed,
+                paddingValues = innerPadding)
+        })
+}
+
+@Composable
 fun CharacterDetailScreen(
     characterId: Int? = DEFAULT_CHARACTER_ID,
     viewModel: CharacterDetailViewModel = hiltViewModel(),
+    paddingValues: PaddingValues,
     onBackButtonPressed: () -> Unit
 ) {
     LaunchedEffect(Unit) {
@@ -49,6 +76,7 @@ fun CharacterDetailScreen(
     when (uiState.value) {
         is CharacterDetailState.InitialState -> {
             Log.i("CharacterDetail", "InitialState")
+            LoadingItem()
         }
 
         is CharacterDetailState.LoadingState -> {
@@ -70,6 +98,7 @@ fun CharacterDetailScreen(
 @Composable
 fun CharacterDetails(
     characterDetail: CharacterDetailEntity?,
+    paddingValues: PaddingValues,
     onBackButtonPressed: () -> Unit
 ) {
     val scrollState = rememberScrollState()
@@ -82,6 +111,7 @@ fun CharacterDetails(
                 .background(color = Color.White)
                 .fillMaxSize()
                 .verticalScroll(scrollState)
+                .padding(top = paddingValues.calculateTopPadding())
                 .testTag("CharacterDetailsParent")
                 .constrainAs(characterDetailsView) {
                     top.linkTo(parent.top)
@@ -101,7 +131,7 @@ fun CharacterDetails(
                 .size(48.dp)
                 .constrainAs(backButton) {
                     start.linkTo(parent.start, margin = 16.dp)
-                    top.linkTo(parent.top, margin = 16.dp)
+                    top.linkTo(characterDetailsView.top, margin = 96.dp)
                 }) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
@@ -113,17 +143,17 @@ fun CharacterDetails(
 
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun CharacterDetailPreview() {
     CharacterDetails(
         CharacterDetailEntity(
             1011334,
-        "Template Hero",
-        MEDIUM_LOREM_IPSUM,
-        "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/landscape_xlarge.jpg",
-        )
+            "Template Hero",
+            MEDIUM_LOREM_IPSUM,
+            "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/landscape_xlarge.jpg",
+        ),
+        paddingValues = PaddingValues(top = 56.dp),
     ) {}
 }
 
