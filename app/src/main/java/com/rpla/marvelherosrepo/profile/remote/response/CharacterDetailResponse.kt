@@ -4,6 +4,19 @@ import com.google.gson.annotations.SerializedName
 import com.rpla.marvelherosrepo.profile.domain.entity.CharacterDetailEntity
 
 data class CharacterDetailResponse(
+    @SerializedName("code")
+    val code: Int,
+    @SerializedName("status")
+    val status: String,
+    @SerializedName("data")
+    val data: DataContainer
+)
+
+data class DataContainer(
+    @SerializedName("results") val results:  List<CharacterDetailShortInfo>
+)
+
+data class CharacterDetailShortInfo(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
@@ -19,7 +32,7 @@ data class Thumbnail(
     @SerializedName("extension") val extension: String
 )
 
-fun CharacterDetailResponse.toEntity() = CharacterDetailEntity(
+fun CharacterDetailShortInfo.toEntity() = CharacterDetailEntity(
     id = id,
     name = name,
     description = description,

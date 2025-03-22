@@ -7,9 +7,6 @@ import com.rpla.marvelherosrepo.profile.remote.response.toEntity
 
 class CharacterDetailMapper {
     fun mapCharacterDetailResponse(characterDetailResponse: CharacterDetailResponse): Record<CharacterDetailEntity> {
-        return Record(
-            characterDetailResponse.toEntity(),
-            null
-        )
+        return Record(characterDetailResponse.data.results[0].toEntity(), null)
     }
 }
