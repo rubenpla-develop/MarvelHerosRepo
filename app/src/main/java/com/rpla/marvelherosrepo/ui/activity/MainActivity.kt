@@ -17,7 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.rpla.marvelherosrepo.home.ui.HomeScreen
-import com.rpla.marvelherosrepo.profile.ui.CharacterDetailScreen
+import com.rpla.marvelherosrepo.profile.ui.ProfileScreen
 import com.rpla.marvelherosrepo.ui.navigation.CHARACTER_ID_PARAM_NAME
 import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.navigation.Routes

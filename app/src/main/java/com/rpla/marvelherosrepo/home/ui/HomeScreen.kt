@@ -90,6 +90,7 @@ fun WorkersGridList(
             LazyVerticalGrid(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight()
                     .padding(top = paddingValues.calculateTopPadding())
                     .background(color = PurpleGrey40),
                 columns = GridCells.Fixed(2),
@@ -100,6 +101,23 @@ fun WorkersGridList(
                         CharacterItem(character = characterEntity) { id ->
                             navigationController.navigate(Routes.CharacterProfile.createRoute(id.toString()))
                         }
+                    }
+                }
+
+                characterItems.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            item { LoadingItem() }
+                            item { LoadingItem() }
+                        }
+
+                        loadState.append is LoadState.Loading -> {
+                            item { LoadingItem() }
+                            item { LoadingItem() }
+                        }
+
+                        loadState.refresh is LoadState.Error -> {}
+                        loadState.append is LoadState.Error -> {}
                     }
                 }
             }
@@ -183,7 +201,6 @@ fun CharacterItem(
                 text = character.name,
                 color = Color.White,
                 fontSize = 10.sp,
-                //fontStyle = FontStyle.Italic,
                 modifier = Modifier
                     .background(Color.DarkGray, RoundedCornerShape(4.dp))
                     .border(1.dp, Color.LightGray, RoundedCornerShape(4.dp))
