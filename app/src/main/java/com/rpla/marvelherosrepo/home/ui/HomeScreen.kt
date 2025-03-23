@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -94,7 +95,8 @@ fun WorkersGridList(
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .padding(top = paddingValues.calculateTopPadding())
-                    .background(color = PurpleGrey40),
+                    .background(color = PurpleGrey40)
+                    .testTag("CharacterGrid"),
                 columns = GridCells.Fixed(2),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
@@ -143,7 +145,8 @@ fun CharacterItem(
             .clickable {
                 Log.i("characterItem", "Character with id ${character.id} clicked")
                 onCharacterClicked(character.id)
-            }) {
+            }
+            .testTag("CharacterItem")) {
         ConstraintLayout {
 
             val (name, comics, photo, spacerTop, spacerStart,
@@ -209,6 +212,7 @@ fun CharacterItem(
                         top.linkTo(spacerTop.bottom)
                         start.linkTo(spacerStart.end)
                     }
+                    .testTag("characterName")
             )
             Text(
                 text = character.comicsListSize.toString().plus(stringResource(R.string.published_comics_append_message)),
@@ -222,6 +226,7 @@ fun CharacterItem(
                         bottom.linkTo(spacerBottom.top)
                         start.linkTo(spacerStart.end)
                     }
+                        .testTag("characterComics")
             )
         }
     }

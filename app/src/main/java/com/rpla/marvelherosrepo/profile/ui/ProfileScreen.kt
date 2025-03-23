@@ -34,9 +34,9 @@ import com.rpla.marvelherosrepo.profile.domain.entity.CharacterDetailEntity
 import com.rpla.marvelherosrepo.profile.ui.compose.ComicListBlock
 import com.rpla.marvelherosrepo.profile.ui.compose.DescriptionBlock
 import com.rpla.marvelherosrepo.profile.ui.compose.MainHeader
-import com.rpla.marvelherosrepo.profile.ui.viewmodel.ProfileScreenIntent
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailState
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailViewModel
+import com.rpla.marvelherosrepo.profile.ui.viewmodel.ProfileScreenIntent
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
 import com.rpla.marvelherosrepo.ui.common.LoadingItem
 import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
@@ -147,12 +147,12 @@ fun CharacterDetails(
                 .background(color = Color.White)
                 .wrapContentHeight()
                 .padding(top = paddingValues.calculateTopPadding())
-                .testTag("CharacterDetailsParent")
                 .constrainAs(characterDetailsView) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
+                .testTag("profileCharacterDetails")
         ) {
             MainHeader(characterDetail)
             DescriptionBlock(characterDetail)
@@ -167,7 +167,8 @@ fun CharacterDetails(
                 .constrainAs(backButton) {
                     start.linkTo(parent.start, margin = 16.dp)
                     top.linkTo(characterDetailsView.top, margin = 96.dp)
-                }) {
+                }
+                .testTag("profileBackButton")) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "Back Button",
@@ -176,11 +177,13 @@ fun CharacterDetails(
         }
 
         ComicListBlock(
-            Modifier.constrainAs(comicListBlock) {
-                top.linkTo(characterDetailsView.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
+            Modifier
+                .constrainAs(comicListBlock) {
+                    top.linkTo(characterDetailsView.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .testTag("profileComicList"),
             comicList ?: CharacterComicListEntity(emptyList())
         )
     }

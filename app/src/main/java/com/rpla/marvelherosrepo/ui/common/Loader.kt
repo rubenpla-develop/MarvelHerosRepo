@@ -7,6 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.rpla.marvelherosrepo.ui.theme.PinkA400
 
@@ -16,7 +17,8 @@ fun LoadingItem() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .wrapContentSize(Alignment.Center),
+            .wrapContentSize(Alignment.Center)
+            .testTag("LoadingItem"),
         color = PinkA400
     )
 }
