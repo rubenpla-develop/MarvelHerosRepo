@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -51,7 +51,7 @@ fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
                 tint = PinkA400
             )
             Text(
-                text = LocalContext.current.getString(R.string.description_title),
+                text = stringResource(R.string.description_title),
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = Black
@@ -83,7 +83,7 @@ fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
                         .clickable {
                             maxLines.value = Int.MAX_VALUE
                         },
-                    text = LocalContext.current.getString(R.string.description_show_more),
+                    text = stringResource(R.string.description_show_more),
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp,
                     textDecoration = TextDecoration.Underline,
@@ -98,7 +98,7 @@ fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
                         .clickable {
                             maxLines.value = 4
                         },
-                    text = LocalContext.current.getString(R.string.description_show_less),
+                    text = stringResource(R.string.description_show_less),
                     fontWeight = FontWeight.Normal,
                     fontSize = 16.sp,
                     textDecoration = TextDecoration.Underline,

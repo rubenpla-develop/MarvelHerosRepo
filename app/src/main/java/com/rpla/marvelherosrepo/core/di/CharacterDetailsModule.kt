@@ -1,6 +1,8 @@
 package com.rpla.marvelherosrepo.core.di
 
+import com.rpla.marvelherosrepo.profile.domain.GetCharacterComicsListUseCase
 import com.rpla.marvelherosrepo.profile.domain.GetCharacterDetailsUseCase
+import com.rpla.marvelherosrepo.profile.domain.repository.CharacterComicsListRepository
 import com.rpla.marvelherosrepo.profile.domain.repository.CharacterDetailRepository
 import dagger.Module
 import dagger.Provides
@@ -12,6 +14,10 @@ import dagger.hilt.android.components.ViewModelComponent
 object CharacterDetailsModule {
 
     @Provides
-    fun providesGetCharacterDetailUseCase(employeeDetailRepository: CharacterDetailRepository) =
-        GetCharacterDetailsUseCase(employeeDetailRepository)
+    fun providesGetCharacterDetailUseCase(characterDetailRepository: CharacterDetailRepository) =
+        GetCharacterDetailsUseCase(characterDetailRepository)
+
+    @Provides
+    fun providesGetCharacterComicListUseCase(characterComicsListRepository: CharacterComicsListRepository) =
+        GetCharacterComicsListUseCase(characterComicsListRepository)
 }

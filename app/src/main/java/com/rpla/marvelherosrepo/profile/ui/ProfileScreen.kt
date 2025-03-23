@@ -5,9 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,10 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rpla.marvelherosrepo.R
+import com.rpla.marvelherosrepo.profile.domain.entity.CharacterComicListEntity
 import com.rpla.marvelherosrepo.profile.domain.entity.CharacterDetailEntity
-import com.rpla.marvelherosrepo.profile.ui.compose.MainHeader
+import com.rpla.marvelherosrepo.profile.ui.compose.ComicListBlock
 import com.rpla.marvelherosrepo.profile.ui.compose.DescriptionBlock
-import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailIntent
+import com.rpla.marvelherosrepo.profile.ui.compose.MainHeader
+import com.rpla.marvelherosrepo.profile.ui.viewmodel.ProfileScreenIntent
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailState
 import com.rpla.marvelherosrepo.profile.ui.viewmodel.CharacterDetailViewModel
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
@@ -42,33 +45,36 @@ import com.rpla.marvelherosrepo.ui.theme.White
 
 @Composable
 fun ProfileScreen(
-    characterId: Int? = DEFAULT_CHARACTER_ID,
+    characterId: Int?,
     onBackButtonPressed: () -> Unit
 ) {
-    Scaffold(topBar = {
-        HomeAppBar(title = stringResource(R.string.profile_screen_title),
-            modifier = Modifier,
-            openFilters = {}
-        )
-    },
+    Scaffold(
+        topBar = {
+            HomeAppBar(
+                title = stringResource(R.string.profile_screen_title),
+                modifier = Modifier,
+                openFilters = {}
+            )
+        },
         content = { innerPadding ->
             CharacterDetailScreen(
-                characterId = characterId,
+                characterId = characterId ?: DEFAULT_CHARACTER_ID,
                 onBackButtonPressed = onBackButtonPressed,
-                paddingValues = innerPadding)
+                paddingValues = innerPadding
+            )
         })
 }
 
 @Composable
 fun CharacterDetailScreen(
-    characterId: Int? = DEFAULT_CHARACTER_ID,
+    characterId: Int,
     viewModel: CharacterDetailViewModel = hiltViewModel(),
     paddingValues: PaddingValues,
     onBackButtonPressed: () -> Unit
 ) {
     LaunchedEffect(Unit) {
-        viewModel.setCharacterId(characterId!!)
-        viewModel.dispatchIntent(CharacterDetailIntent.CharacterDetail)
+        viewModel.setCharacterId(characterId)
+        viewModel.dispatchIntent(ProfileScreenIntent.CharacterComicList)
     }
 
     val uiState = viewModel.state.collectAsState()
@@ -84,38 +90,64 @@ fun CharacterDetailScreen(
         }
 
         is CharacterDetailState.CharacterDetailData -> {
-            Log.i("CharacterDetail", "Get character detail State")
-            val characterDetail =
-                (uiState.value as CharacterDetailState.CharacterDetailData).characterDetail
-
-            CharacterDetails(characterDetail, onBackButtonPressed)
-
+            DrawCharacterInfo(
+                paddingValues,
+                onBackButtonPressed,
+                uiState,
+                viewModel.characterComicList
+            )
         }
-        else -> {}
+
+        is CharacterDetailState.CharacterComicListData -> {
+            Log.i("CharacterDetail", "Get character Comic List State")
+            val characterComicList =
+                (uiState.value as CharacterDetailState.CharacterComicListData).characterComicList
+
+            viewModel.setComicList(characterComicList)
+            viewModel.dispatchIntent(ProfileScreenIntent.CharacterDetail)
+            LoadingItem()
+        }
     }
 }
+
+@Composable
+private fun DrawCharacterInfo(
+    paddingValues: PaddingValues,
+    onBackButtonPressed: () -> Unit,
+    uiState: State<CharacterDetailState>,
+    comicList: CharacterComicListEntity?
+) {
+    Log.i("CharacterDetail", "Get character detail State")
+    val characterDetail =
+        (uiState.value as CharacterDetailState.CharacterDetailData).characterDetail
+
+    CharacterDetails(characterDetail,
+        onBackButtonPressed = onBackButtonPressed,
+        paddingValues = paddingValues,
+        comicList = comicList)
+}
+
 
 @Composable
 fun CharacterDetails(
     characterDetail: CharacterDetailEntity?,
     paddingValues: PaddingValues,
-    onBackButtonPressed: () -> Unit
+    onBackButtonPressed: () -> Unit,
+    comicList: CharacterComicListEntity?
 ) {
     val scrollState = rememberScrollState()
 
-    ConstraintLayout {
-        val (characterDetailsView, backButton) = createRefs()
+    ConstraintLayout(modifier = Modifier.verticalScroll(scrollState)) {
+        val (characterDetailsView, backButton, comicListBlock) = createRefs()
 
         Column(
             modifier = Modifier
                 .background(color = Color.White)
-                .fillMaxSize()
-                .verticalScroll(scrollState)
+                .wrapContentHeight()
                 .padding(top = paddingValues.calculateTopPadding())
                 .testTag("CharacterDetailsParent")
                 .constrainAs(characterDetailsView) {
                     top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
@@ -124,7 +156,8 @@ fun CharacterDetails(
             DescriptionBlock(characterDetail)
         }
 
-        IconButton(onClick = { onBackButtonPressed() },
+        IconButton(
+            onClick = { onBackButtonPressed() },
             modifier = Modifier
                 .background(PinkA400, shape = CircleShape)
                 .border(1.dp, White, shape = CircleShape)
@@ -139,6 +172,15 @@ fun CharacterDetails(
                 tint = White
             )
         }
+
+        ComicListBlock(
+            Modifier.constrainAs(comicListBlock) {
+                top.linkTo(characterDetailsView.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            comicList ?: CharacterComicListEntity(emptyList())
+        )
     }
 
 }
@@ -154,7 +196,9 @@ fun CharacterDetailPreview() {
             "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/landscape_xlarge.jpg",
         ),
         paddingValues = PaddingValues(top = 56.dp),
-    ) {}
+        {},
+        comicList = CharacterComicListEntity(emptyList()),
+    )
 }
 
 const val MEDIUM_LOREM_IPSUM =
