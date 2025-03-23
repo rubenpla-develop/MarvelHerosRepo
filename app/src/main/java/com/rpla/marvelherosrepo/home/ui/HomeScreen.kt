@@ -46,7 +46,7 @@ import com.rpla.marvelherosrepo.home.ui.viewModel.HomeIntent
 import com.rpla.marvelherosrepo.home.ui.viewModel.HomeState
 import com.rpla.marvelherosrepo.ui.common.HomeAppBar
 import com.rpla.marvelherosrepo.ui.common.LoadingItem
-import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
+
 import com.rpla.marvelherosrepo.ui.navigation.Routes
 import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 
@@ -146,7 +146,7 @@ fun CharacterItem(
             }) {
         ConstraintLayout {
 
-            val (name, gender, category, photo, spacerTop, spacerStart,
+            val (name, comics, photo, spacerTop, spacerStart,
                 spacerBottom, spacerEnd) = createRefs()
 
             Image(
@@ -211,14 +211,14 @@ fun CharacterItem(
                     }
             )
             Text(
-                text = character.comicsListSize.toString().plus(LocalContext.current.getString(R.string.published_comics_append_message)),
+                text = character.comicsListSize.toString().plus(stringResource(R.string.published_comics_append_message)),
                 color = Color.White,
                 fontSize = 10.sp,
                 modifier = Modifier
                     .background(Color.DarkGray, RoundedCornerShape(4.dp))
                     .border(1.dp, Color.LightGray, RoundedCornerShape(4.dp))
                     .padding(top = 1.dp, start = 3.dp, bottom = 1.dp, end = 3.dp)
-                    .constrainAs(gender) {
+                    .constrainAs(comics) {
                         bottom.linkTo(spacerBottom.top)
                         start.linkTo(spacerStart.end)
                     }
