@@ -113,7 +113,8 @@ dependencies {
     implementation(libs.hilt.android) // Core de Hilt
     implementation(libs.androidx.annotation) // Para soporte de anotaciones
     implementation(libs.security.crypto)
-    implementation(libs.security.crypto.ktx) // Soporte KTX (incluye MasterKey)
+    implementation(libs.security.crypto.ktx)
+    implementation(libs.androidx.ui.test.android) // Soporte KTX (incluye MasterKey)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose) // Integración con Jetpack Compose
 
