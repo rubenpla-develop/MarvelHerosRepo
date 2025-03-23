@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
@@ -33,7 +33,7 @@ class HomeAppBarTest {
             }
         }
 
-        composeTestRule.onNodeWithContentDescription("Filter").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("HomeAppBarTitle").assertIsDisplayed()
     }
 
     @Test
@@ -48,13 +48,11 @@ class HomeAppBarTest {
             }
         }
 
-        composeTestRule.onNodeWithContentDescription("Filter").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("HomeAppBarFilterButton").assertIsDisplayed()
     }
 
     @Test
     fun given_filter_button_is_clicked_toast_message_appears() {
-        // Dado que los Toast no se pueden verificar directamente en tests de Compose,
-        // verificamos que al menos el botón es clicable (lo que desencadena el Toast y la lambda)
         composeTestRule.setContent {
             MarvelHerosRepoTheme {
                 HomeAppBar(
@@ -65,7 +63,7 @@ class HomeAppBarTest {
             }
         }
 
-        composeTestRule.onNodeWithContentDescription("Filter").performClick()
+        composeTestRule.onNodeWithTag("HomeAppBarFilterButton").performClick()
     }
 
     @Test
@@ -82,7 +80,7 @@ class HomeAppBarTest {
             }
         }
 
-        composeTestRule.onNodeWithContentDescription("Filter").performClick()
+        composeTestRule.onNodeWithTag("HomeAppBarFilterButton").performClick()
 
         assertThat(filterClicked, `is`(true))
     }
@@ -106,22 +104,19 @@ class HomeAppBarTest {
     }
 
     @Test
-    fun top_app_bar_contains_icon_button_and_text() {
-        val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
-        val title = context.getString(R.string.app_name)
-
+    fun top_app_bar_contains_title_and_filter_button_using_test_tags() {
         composeTestRule.setContent {
             MarvelHerosRepoTheme {
                 HomeAppBar(
-                    title = title,
+                    title = stringResource(R.string.app_name),
                     modifier = Modifier,
                     openFilters = {}
                 )
             }
         }
 
-        composeTestRule.onNodeWithText(title).assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("Filter").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("HomeAppBar").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("HomeAppBarTitle").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("HomeAppBarFilterButton").assertIsDisplayed()
     }
-
 }
