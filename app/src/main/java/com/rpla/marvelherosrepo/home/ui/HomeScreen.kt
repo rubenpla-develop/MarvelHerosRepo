@@ -52,7 +52,8 @@ import com.rpla.marvelherosrepo.ui.theme.PurpleGrey40
 
 @Composable
 fun HomeScreen(
-    navigationController: NavHostController
+    navigationController: NavHostController,
+    viewModel: CharactersListViewModel = hiltViewModel(),
 ) {
     Scaffold(topBar = {
         HomeAppBar(title = stringResource(R.string.app_name),
@@ -63,14 +64,15 @@ fun HomeScreen(
         content = { innerPadding ->
             WorkersGridList(
                 paddingValues = innerPadding,
-                navigationController = navigationController
+                navigationController = navigationController,
+                viewModel = viewModel
             )
         })
 }
 
 @Composable
 fun WorkersGridList(
-    viewModel: CharactersListViewModel = hiltViewModel(),
+    viewModel: CharactersListViewModel,
     paddingValues: PaddingValues,
     navigationController: NavHostController
 ) {
@@ -122,8 +124,6 @@ fun WorkersGridList(
                 }
             }
         }
-
-        else -> {}
     }
 }
 

@@ -45,6 +45,7 @@ import com.rpla.marvelherosrepo.ui.theme.White
 
 @Composable
 fun ProfileScreen(
+    viewModel: CharacterDetailViewModel = hiltViewModel(),
     characterId: Int?,
     onBackButtonPressed: () -> Unit
 ) {
@@ -60,7 +61,8 @@ fun ProfileScreen(
             CharacterDetailScreen(
                 characterId = characterId ?: DEFAULT_CHARACTER_ID,
                 onBackButtonPressed = onBackButtonPressed,
-                paddingValues = innerPadding
+                paddingValues = innerPadding,
+                viewModel = viewModel
             )
         })
 }
@@ -68,7 +70,7 @@ fun ProfileScreen(
 @Composable
 fun CharacterDetailScreen(
     characterId: Int,
-    viewModel: CharacterDetailViewModel = hiltViewModel(),
+    viewModel: CharacterDetailViewModel,
     paddingValues: PaddingValues,
     onBackButtonPressed: () -> Unit
 ) {
