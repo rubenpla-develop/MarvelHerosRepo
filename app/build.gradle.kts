@@ -51,7 +51,11 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes.add("META-INF/LICENSE.md")
+            excludes.add("META-INF/LICENSE.txt")
+            excludes.add("META-INF/AL2.0")
+            excludes.add("META-INF/LGPL2.1")
+            excludes.add("META-INF/LICENSE-notice.md")
         }
     }
 
@@ -109,15 +113,23 @@ dependencies {
     implementation(libs.hilt.android) // Core de Hilt
     implementation(libs.androidx.annotation) // Para soporte de anotaciones
     implementation(libs.security.crypto)
-    implementation(libs.security.crypto.ktx) // Soporte KTX (incluye MasterKey)
+    implementation(libs.security.crypto.ktx)
+    implementation(libs.androidx.ui.test.android) // Soporte KTX (incluye MasterKey)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose) // Integración con Jetpack Compose
 
     testImplementation(libs.junit)
+    testImplementation(libs.hamcrest)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk) // Para tests unitarios
+    testImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.mockk.android) // Para tests instrumentados
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.compose.ui.tooling) // Herramientas de inspección en modo debug
+    debugImplementation(libs.compose.ui.test.manifest) // Soporte para tests UI en modo debug
 }
