@@ -123,10 +123,19 @@ private fun DrawCharacterInfo(
     val characterDetail =
         (uiState.value as CharacterDetailState.CharacterDetailData).characterDetail
 
-    CharacterDetails(characterDetail,
+    val fakeCharacter = CharacterDetailEntity(
+        1011334,
+        "Template Hero",
+        MEDIUM_LOREM_IPSUM,
+        "https://i.annihil.us/u/prod/marvel/i/mg/a/f0/5202887448860.jpg"
+    )
+
+    CharacterDetails(
+        characterDetail ?: fakeCharacter,
         onBackButtonPressed = onBackButtonPressed,
         paddingValues = paddingValues,
-        comicList = comicList)
+        comicList = comicList
+    )
 }
 
 

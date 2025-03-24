@@ -1,5 +1,6 @@
 package com.rpla.marvelherosrepo.core.di
 
+import android.content.Context
 import com.rpla.marvelherosrepo.data.DataSource
 import com.rpla.marvelherosrepo.home.data.repository.CharacterRepositoryImpl
 import com.rpla.marvelherosrepo.home.domain.repository.CharacterRepository
@@ -17,8 +18,9 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
     @Provides
-    fun providesCharacterRepository(dataSource: DataSource): CharacterRepository =
-        CharacterRepositoryImpl(dataSource = dataSource)
+    fun providesCharacterRepository(dataSource: DataSource, context: Context): CharacterRepository =
+        CharacterRepositoryImpl(dataSource = dataSource,
+            context = context)
 
     @Provides
     fun providesCharacterDetailRepository(dataSource: DataSource): CharacterDetailRepository =
