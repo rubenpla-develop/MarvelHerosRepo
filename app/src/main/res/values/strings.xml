@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Marvel Heroes Repo</string>
+    <string name="profile_screen_title">Character Profile</string>
+    <string name="description_title">Description</string>
+    <string name="no_description_message">This character has no description available</string>
+    <string name="description_show_more">Show More</string>
+    <string name="description_show_less">Show Less</string>
+    <string name="published_comics_title">Published Comics</string>
+    <string name="comic_item_title">Title:\u0020</string>
+    <string name="comic_item_description">Description:\u0020</string>
+    <string name="comic_item_modified">Last Modified:\u0020</string>
+    <string name="published_comics_append_message">\u0020comics published</string>
+</resources>
