@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     id("org.jetbrains.kotlin.kapt") // Habilitar Kapt
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -81,6 +82,12 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+detekt {
+    //config.setFrom("$rootDir/config/detekt/detekt.yml") // opcional
+    buildUponDefaultConfig = true
+    parallel = true
 }
 
 dependencies {
