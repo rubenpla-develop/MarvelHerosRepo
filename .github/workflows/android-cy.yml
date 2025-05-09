@@ -27,11 +27,17 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Create local.properties with Android SDK path
+        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+
       - name: Run detekt static analysis
         run: ./gradlew detekt
 
       - name: Build project
         run: ./gradlew build
+        env:
+          PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
 
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
