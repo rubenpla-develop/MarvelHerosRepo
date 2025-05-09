@@ -11,3 +11,4 @@ sealed class HomeState: ViewState {
     data object LoadingState: HomeState()
     class CharactersListData(val characters: Flow<PagingData<CharacterResultsEntity>>): HomeState()
 }
+
