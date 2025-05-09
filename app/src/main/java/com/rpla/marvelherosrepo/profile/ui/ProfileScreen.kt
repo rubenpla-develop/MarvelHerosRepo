@@ -43,6 +43,8 @@ import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.theme.PinkA400
 import com.rpla.marvelherosrepo.ui.theme.White
 
+const val DEFAULT_ID = 1011334
+
 @Composable
 fun ProfileScreen(
     viewModel: CharacterDetailViewModel = hiltViewModel(),
@@ -195,7 +197,7 @@ fun CharacterDetails(
 fun CharacterDetailPreview() {
     CharacterDetails(
         CharacterDetailEntity(
-            1011334,
+            DEFAULT_ID,
             "Template Hero",
             MEDIUM_LOREM_IPSUM,
             "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/landscape_xlarge.jpg",

@@ -19,6 +19,9 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+const val DEFAULT_CACHE_SIZE = 10 * 1024 * 1024
+const val CACHE_DIR_CHILD = "http-cache"
+
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
@@ -31,8 +34,8 @@ object RetrofitModule {
 
     @Provides
     fun providesCache(context: Context): Cache {
-        val cacheSize = (10 * 1024 * 1024).toLong() //10 MB
-        val httpCacheDirectory = File(context.cacheDir, "http-cache")
+        val cacheSize = (DEFAULT_CACHE_SIZE).toLong() //10 MB
+        val httpCacheDirectory = File(context.cacheDir, CACHE_DIR_CHILD)
         return Cache(httpCacheDirectory, cacheSize)
     }
 

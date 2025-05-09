@@ -26,13 +26,16 @@ import com.rpla.marvelherosrepo.profile.domain.entity.CharacterDetailEntity
 import com.rpla.marvelherosrepo.ui.theme.Black
 import com.rpla.marvelherosrepo.ui.theme.PinkA400
 
+const val MAX_LINES = 4
+const val LINE_INDEX = 3
+
 @Composable
 fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
     val shouldShowMore = remember {
         mutableStateOf(DescriptionStatus.DEFAULT)
     }
     val maxLines = remember {
-        mutableStateOf(4)
+        mutableStateOf(MAX_LINES)
     }
 
     Column(
@@ -67,7 +70,7 @@ fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
             onTextLayout = {
-                if (it.lineCount == 4 && it.isLineEllipsized(3)) {
+                if (it.lineCount == 4 && it.isLineEllipsized(LINE_INDEX)) {
                     shouldShowMore.value = DescriptionStatus.SHOW_MORE
                 } else if (it.lineCount > 4) {
                     shouldShowMore.value = DescriptionStatus.SHOW_LESS
@@ -96,7 +99,7 @@ fun DescriptionBlock(characterDetail: CharacterDetailEntity?) {
                     modifier = Modifier
                         .padding(start = 16.dp, end = 16.dp)
                         .clickable {
-                            maxLines.value = 4
+                            maxLines.value = MAX_LINES
                         },
                     text = stringResource(R.string.description_show_less),
                     fontWeight = FontWeight.Normal,
