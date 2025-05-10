@@ -85,7 +85,7 @@ android {
 }
 
 detekt {
-    //config.setFrom("$rootDir/config/detekt/detekt.yml") // opcional
+    config.setFrom("$rootDir/config/detekt/detekt.yml")
     buildUponDefaultConfig = true
     parallel = true
 }

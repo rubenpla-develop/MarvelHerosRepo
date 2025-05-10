@@ -1,0 +1,77 @@
+build:
+  maxIssues: 0
+  weights:
+    complexity: 2
+    LongParameterList: 1
+    style: 1
+
+style:
+  FunctionNaming:
+    active: true
+    functionPattern: '^([A-Z][a-zA-Z0-9]*)|([a-z][a-zA-Z0-9]*)$'
+    ignoreAnnotated:
+      - 'Composable'
+
+  MagicNumber:
+    active: true
+    ignoreNumbers: [-1, 0, 1, 2, 255]
+    ignoreHashCodeFunction: true
+    ignorePropertyDeclaration: true
+    ignoreAnnotation: true
+    ignoreEnums: true
+    ignoreClassesPattern: '.*Colors?Kt'
+
+  TooManyFunctions:
+    active: true
+    thresholdInClasses: 20
+    thresholdInInterfaces: 20
+    thresholdInObjects: 20
+
+  NestedBlockDepth:
+    active: true
+    threshold: 4
+
+  ComplexMethod:
+    active: true
+    threshold: 15
+
+  ReturnCount:
+    active: true
+    max: 4
+
+  DestructuringDeclarationWithTooManyEntries:
+    active: false
+
+  ForbiddenComment:
+    active: true
+    values: [TODO, FIXME, STOPSHIP]
+
+  WildcardImport:
+    active: true
+    excludeImports: ['java.util.*', 'kotlinx.coroutines.*']
+
+naming:
+  ClassNaming:
+    active: true
+    classPattern: '[A-Z][a-zA-Z0-9]*'
+
+  VariableNaming:
+    active: true
+    variablePattern: '[a-z][A-Za-z0-9]*'
+
+  ObjectPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][_A-Z0-9]*'
+    propertyPattern: '[a-z][A-Za-z0-9]*'
+
+performance:
+  SpreadOperator:
+    active: false
+
+potential-bugs:
+  UnsafeCallOnNullableType:
+    active: true
+
+  DuplicateCaseInWhenExpression:
+    active: true
+
