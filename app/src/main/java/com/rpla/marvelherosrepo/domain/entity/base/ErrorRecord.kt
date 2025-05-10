@@ -6,3 +6,4 @@ sealed class ErrorRecord {
     data object NetworkError: ErrorRecord()
     data object GenericError: ErrorRecord()
 }
+

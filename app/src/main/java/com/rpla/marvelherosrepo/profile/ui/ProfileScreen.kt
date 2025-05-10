@@ -43,6 +43,8 @@ import com.rpla.marvelherosrepo.ui.navigation.DEFAULT_CHARACTER_ID
 import com.rpla.marvelherosrepo.ui.theme.PinkA400
 import com.rpla.marvelherosrepo.ui.theme.White
 
+const val DEFAULT_ID = 1011334
+
 @Composable
 fun ProfileScreen(
     viewModel: CharacterDetailViewModel = hiltViewModel(),
@@ -195,7 +197,7 @@ fun CharacterDetails(
 fun CharacterDetailPreview() {
     CharacterDetails(
         CharacterDetailEntity(
-            1011334,
+            DEFAULT_ID,
             "Template Hero",
             MEDIUM_LOREM_IPSUM,
             "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16/landscape_xlarge.jpg",
@@ -207,6 +209,23 @@ fun CharacterDetailPreview() {
 }
 
 const val MEDIUM_LOREM_IPSUM =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat odio facilisis mauris sit. Amet venenatis urna cursus eget nunc scelerisque viverra mauris. Massa tempor nec feugiat nisl. Convallis a cras semper auctor neque. Lectus sit amet est placerat in. Adipiscing tristique risus nec feugiat."
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+            "ut labore et dolore magna aliqua. Volutpat odio facilisis mauris sit. Amet venenatis " +
+            "urna cursus eget nunc scelerisque viverra mauris. Massa tempor nec feugiat nisl. " +
+            "Convallis a cras semper auctor neque. Lectus sit amet est placerat in. Adipiscing " +
+            "tristique risus nec feugiat."
 const val HUGE_LOREM_IPSUM =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet cursus sit amet dictum sit amet justo donec enim. Consectetur libero id faucibus nisl tincidunt eget nullam non. Lorem donec massa sapien faucibus et molestie ac feugiat sed. Tellus in metus vulputate eu. Lacus sed viverra tellus in hac habitasse platea dictumst. Duis ut diam quam nulla. Rhoncus urna neque viverra justo nec. Eget nunc lobortis mattis aliquam faucibus purus in. Nunc id cursus metus aliquam eleifend mi in nulla. Blandit turpis cursus in hac habitasse platea dictumst. Enim eu turpis egestas pretium aenean pharetra. Velit egestas dui id ornare arcu odio. Vitae congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque. Velit laoreet id donec ultrices tincidunt arcu. Tellus integer feugiat scelerisque varius morbi enim nunc. Sit amet justo donec enim. Lectus quam id leo in vitae turpis massa sed elementum. Molestie a iaculis at erat pellentesque adipiscing commodo. Felis eget velit aliquet sagittis id."
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt" +
+            " ut labore et dolore magna aliqua. Amet cursus sit amet dictum sit amet justo donec" +
+            " enim. Consectetur libero id faucibus nisl tincidunt eget nullam non. Lorem donec " +
+            "massa sapien faucibus et molestie ac feugiat sed. Tellus in metus vulputate eu. " +
+            "Lacus sed viverra tellus in hac habitasse platea dictumst. Duis ut diam quam nulla. " +
+            "" +
+            "Rhoncus urna neque viverra justo nec. Eget nunc lobortis mattis aliquam faucibus " +
+            "purus in. Nunc id cursus metus aliquam eleifend mi in nulla. Blandit turpis cursus " +
+            "in hac habitasse platea dictumst. Enim eu turpis egestas pretium aenean pharetra. " +
+            "Velit egestas dui id ornare arcu odio. Vitae congue mauris rhoncus aenean vel elit " +
+            "scelerisque mauris pellentesque. Velit laoreet id donec ultrices tincidunt arcu. " +
+            "Tellus integer feugiat scelerisque varius morbi enim nunc. Sit amet justo donec " +
+            "enim. Lectus quam id leo in vitae turpis massa sed elementum. Molestie a iaculis at" +
+            " erat pellentesque adipiscing commodo. Felis eget velit aliquet sagittis id."

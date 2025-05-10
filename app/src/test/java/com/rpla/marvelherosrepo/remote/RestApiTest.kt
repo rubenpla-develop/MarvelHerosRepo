@@ -10,11 +10,14 @@ import org.junit.Test
 import java.net.HttpURLConnection
 
 
-class RestApiTest: BaseTest() {
+class RestApiTest : BaseTest() {
 
     @Test
     fun should_get_all_characters_when_server_gives_success_response() = runBlocking {
-        val expectedResponse = getExpectedResponse("characters_list_template_json.json", CharacterListResponse::class.java)
+        val expectedResponse = getExpectedResponse(
+            "characters_list_template_json.json",
+            CharacterListResponse::class.java
+        )
         getResponse("characters_list_template_json.json", HttpURLConnection.HTTP_OK)
         val result = restApi.getCharacters(GetAllCharactersRequest(1))
         Assert.assertEquals(expectedResponse.data.results.size, result.data.results.size)
@@ -22,17 +25,28 @@ class RestApiTest: BaseTest() {
 
     @Test
     fun should_get_character_details_when_server_gives_success_response() = runBlocking {
-        val expectedResponse = getExpectedResponse("character_by_id_template_json.json", CharacterDetailResponse::class.java)
+        val expectedResponse = getExpectedResponse(
+            "character_by_id_template_json.json",
+            CharacterDetailResponse::class.java
+        )
         getResponse("character_by_id_template_json.json", HttpURLConnection.HTTP_OK)
-        val result = restApi.getCharacterDetail(GetCharacterDetailRequest(1))
-        Assert.assertEquals(expectedResponse.data.results.first().id, result.data.results.first().id)
+        val result = restApi.getCharacterDetail(
+            GetCharacterDetailRequest(1)
+        )
+        Assert.assertEquals(
+            expectedResponse.data.results.first().id,
+            result.data.results.first().id
+        )
     }
 
     @Test
     fun should_throw_client_exception_when_server_sends_4xx_response() {
         Assert.assertThrows(RemoteException.ClientError::class.java) {
             runBlocking {
-                getResponse("characters_list_template_json.json", HttpURLConnection.HTTP_BAD_REQUEST)
+                getResponse(
+                    "characters_list_template_json.json",
+                    HttpURLConnection.HTTP_BAD_REQUEST
+                )
                 restApi.getCharacters(GetAllCharactersRequest(1))
             }
         }
@@ -42,7 +56,10 @@ class RestApiTest: BaseTest() {
     fun should_throw_server_exception_when_server_sends_5xx_response() {
         Assert.assertThrows(RemoteException.ServerError::class.java) {
             runBlocking {
-                getResponse("characters_list_template_json.json", HttpURLConnection.HTTP_BAD_GATEWAY)
+                getResponse(
+                    "characters_list_template_json.json",
+                    HttpURLConnection.HTTP_BAD_GATEWAY
+                )
                 restApi.getCharacters(GetAllCharactersRequest(1))
             }
         }

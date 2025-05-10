@@ -6,3 +6,4 @@ sealed class HomeIntent: ViewIntent {
     data object AllCharacters: HomeIntent()
     data object GetFilteredCharacters: HomeIntent()
 }
+

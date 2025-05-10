@@ -6,3 +6,4 @@ sealed class HomeAction: ViewAction {
     data object GetAllCharacters: HomeAction()
     data object GetFilteredCharacters: HomeAction()
 }
+

@@ -6,7 +6,9 @@ import com.rpla.marvelherosrepo.profile.domain.entity.CharacterComicListEntity
 import com.rpla.marvelherosrepo.profile.domain.repository.CharacterComicsListRepository
 import javax.inject.Inject
 
-class GetCharacterComicsListUseCase @Inject constructor(private val characterComicsListRepository: CharacterComicsListRepository) :
+class GetCharacterComicsListUseCase @Inject constructor(
+    private val characterComicsListRepository: CharacterComicsListRepository
+) :
     BaseUseCase<GetCharacterComicsListUseCase.RequestValue, Record<CharacterComicListEntity>>() {
 
     override suspend fun run(request: RequestValue): Record<CharacterComicListEntity> {

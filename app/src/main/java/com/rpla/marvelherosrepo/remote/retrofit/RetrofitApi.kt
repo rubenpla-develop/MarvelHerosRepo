@@ -45,4 +45,3 @@ interface RetrofitApi {
     ): CharacterComicsListResponse
 
 }
-

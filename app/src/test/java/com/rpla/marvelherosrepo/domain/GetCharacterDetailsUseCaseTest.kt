@@ -5,7 +5,11 @@ import com.rpla.marvelherosrepo.domain.entity.base.Record
 import com.rpla.marvelherosrepo.profile.domain.GetCharacterDetailsUseCase
 import com.rpla.marvelherosrepo.profile.domain.repository.CharacterDetailRepository
 import com.rpla.marvelherosrepo.utils.CharactersFakeData
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert

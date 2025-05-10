@@ -6,7 +6,13 @@ import com.rpla.marvelherosrepo.profile.remote.response.CharacterComicsListRespo
 import com.rpla.marvelherosrepo.profile.remote.response.toEntity
 
 class CharacterComicsListMapper {
-    fun mapCharacterComicsListResponse(characterComicsListResponse: CharacterComicsListResponse): Record<CharacterComicListEntity> {
-        return Record(CharacterComicListEntity(characterComicsListResponse.data.results.toEntity()), null)
+    fun mapCharacterComicsListResponse(characterComicsListResponse: CharacterComicsListResponse)
+            : Record<CharacterComicListEntity> {
+        return Record(
+            CharacterComicListEntity(
+                characterComicsListResponse.data.results.toEntity()
+            ),
+            null
+        )
     }
 }
