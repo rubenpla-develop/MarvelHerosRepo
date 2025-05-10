@@ -1,9 +1,5 @@
 build:
   maxIssues: 0
-  weights:
-    complexity: 2
-    LongParameterList: 1
-    style: 1
 
 naming:
   FunctionNaming:
@@ -20,10 +16,6 @@ style:
     ignorePropertyDeclaration: true
     ignoreAnnotation: true
     excludes: ['**/Colors.kt']
-
-  FunctionLength:
-    active: true
-    maximumFunctionLength: 60
 
   ReturnCount:
     active: true
@@ -45,6 +37,10 @@ complexity:
   CyclomaticComplexMethod:
     active: true
     threshold: 15
+
+FunctionLength:
+  active: true
+  maximum: 60
 
 comments:
   CommentOverPrivateFunction:
