@@ -19,9 +19,9 @@ style:
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: true
     ignoreAnnotation: true
-    excludePaths: '.*Colors.kt'
+    excludes: ['**/Colors.kt']
 
-  FunctionMaxLength:
+  FunctionLength:
     active: true
     maximumFunctionLength: 60
 
@@ -33,9 +33,6 @@ style:
     active: true
     excludeImports: ['java.util.*', 'kotlinx.coroutines.*']
 
-  ForbiddenComment:
-    active: false  # deprecated, usa `comments` si quieres control de TODO/FIXME
-
 complexity:
   TooManyFunctions:
     active: true
@@ -45,7 +42,7 @@ complexity:
     active: true
     threshold: 4
 
-  ComplexMethod:
+  CyclomaticComplexMethod:
     active: true
     threshold: 15
 
